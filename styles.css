@@ -1,264 +1,276 @@
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    initializeGallery();
-    updateTime();
-    setupEventListeners();
-    setupScrollSpy();
-    
-    // Обновляем время каждую секунду
-    setInterval(updateTime, 1000);
-});
-
-// Инициализация галереи
-function initializeGallery() {
-    const gallery = document.getElementById('image-gallery');
-    const images = [
-        {
-            url: 'https://via.placeholder.com/300x200/3498db/ffffff?text=Проект+1',
-            alt: 'Пример проекта 1'
-        },
-        {
-            url: 'https://via.placeholder.com/300x200/2ecc71/ffffff?text=Проект+2',
-            alt: 'Пример проекта 2'
-        },
-        {
-            url: 'https://via.placeholder.com/300x200/e74c3c/ffffff?text=Проект+3',
-            alt: 'Пример проекта 3'
-        },
-        {
-            url: 'https://via.placeholder.com/300x200/f39c12/ffffff?text=Проект+4',
-            alt: 'Пример проекта 4'
-        },
-        {
-            url: 'https://via.placeholder.com/300x200/9b59b6/ffffff?text=Проект+5',
-            alt: 'Пример проекта 5'
-        },
-        {
-            url: 'https://via.placeholder.com/300x200/1abc9c/ffffff?text=Проект+6',
-            alt: 'Пример проекта 6'
-        }
-    ];
-
-    images.forEach(image => {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-        
-        const img = document.createElement('img');
-        img.src = image.url;
-        img.alt = image.alt;
-        img.loading = 'lazy';
-        
-        galleryItem.appendChild(img);
-        gallery.appendChild(galleryItem);
-    });
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Настройка обработчиков событий
-function setupEventListeners() {
-    // Кнопка приветствия
-    const welcomeBtn = document.getElementById('welcome-btn');
-    if (welcomeBtn) {
-        welcomeBtn.addEventListener('click', showWelcomeMessage);
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Шапка */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Навигация */
+nav {
+    background-color: #2c3e50;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    margin: 0 0.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+nav a:hover {
+    background-color: #34495e;
+    transform: translateY(-2px);
+}
+
+nav a.active {
+    background-color: #3498db;
+}
+
+/* Основной контейнер */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: calc(100vh - 200px);
+}
+
+/* Секции */
+.section {
+    background: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+}
+
+.section h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+/* Кнопки */
+.btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Сетка услуг */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.service-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border-left: 4px solid #3498db;
+}
+
+.service-card:hover {
+    background: #e9ecef;
+    transform: translateY(-3px);
+}
+
+.service-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+/* Галерея */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Форма */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Счетчик */
+.counter {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#counter-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3498db;
+}
+
+/* Сообщения формы */
+#form-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    display: none;
+}
+
+#form-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+}
+
+#form-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+}
+
+/* Подвал */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
-
-    // Счетчик
-    const incrementBtn = document.getElementById('increment-btn');
-    if (incrementBtn) {
-        incrementBtn.addEventListener('click', incrementCounter);
-    }
-
-    // Форма обратной связи
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleFormSubmit);
-    }
-
-    // Плавная прокрутка для навигации
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
-
-// Показать приветственное сообщение
-function showWelcomeMessage() {
-    alert('Добро пожаловать на наш сайт! 🎉\nМы рады видеть вас здесь!');
-    
-    // Добавляем анимацию к кнопке
-    const btn = document.getElementById('welcome-btn');
-    btn.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        btn.style.transform = 'scale(1)';
-    }, 150);
-}
-
-// Счетчик
-let counter = 0;
-function incrementCounter() {
-    counter++;
-    const counterElement = document.getElementById('counter-value');
-    if (counterElement) {
-        counterElement.textContent = counter;
-        counterElement.style.color = getRandomColor();
-        
-        // Анимация счетчика
-        counterElement.style.transform = 'scale(1.2)';
-        setTimeout(() => {
-            counterElement.style.transform = 'scale(1)';
-        }, 200);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-// Обработка формы
-function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        message: document.getElementById('message').value
-    };
-    
-    // Валидация
-    if (!validateForm(formData)) {
-        showFormMessage('Пожалуйста, заполните все поля правильно', 'error');
-        return;
+.section {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
     }
     
-    // Имитация отправки формы
-    simulateFormSubmission(formData);
-}
-
-// Валидация формы
-function validateForm(formData) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (formData.name.trim().length < 2) {
-        return false;
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+        text-align: center;
     }
     
-    if (!emailRegex.test(formData.email)) {
-        return false;
+    header h1 {
+        font-size: 2rem;
     }
     
-    if (formData.message.trim().length < 10) {
-        return false;
+    .services-grid {
+        grid-template-columns: 1fr;
     }
     
-    return true;
-}
-
-// Имитация отправки формы
-function simulateFormSubmission(formData) {
-    const submitBtn = document.querySelector('#contact-form .btn');
-    const originalText = submitBtn.textContent;
-    
-    // Показываем индикатор загрузки
-    submitBtn.textContent = 'Отправка...';
-    submitBtn.disabled = true;
-    
-    // Имитируем задержку сети
-    setTimeout(() => {
-        console.log('Данные формы:', formData);
-        showFormMessage('Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.', 'success');
-        
-        // Сбрасываем форму
-        document.getElementById('contact-form').reset();
-        
-        // Восстанавливаем кнопку
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
-}
-
-// Показать сообщение формы
-function showFormMessage(message, type) {
-    const messageElement = document.getElementById('form-message');
-    messageElement.textContent = message;
-    messageElement.className = type;
-    
-    // Автоматически скрываем сообщение через 5 секунд
-    setTimeout(() => {
-        messageElement.style.display = 'none';
-    }, 5000);
-}
-
-// Обновление времени
-function updateTime() {
-    const timeElement = document.getElementById('current-time');
-    if (timeElement) {
-        const now = new Date();
-        const timeString = now.toLocaleString('ru-RU', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            weekday: 'long',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        });
-        timeElement.textContent = `Текущее время: ${timeString}`;
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
-
-// Spy-scroll для навигации
-function setupScrollSpy() {
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    function updateActiveNavLink() {
-        let currentSection = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSection}`) {
-                link.classList.add('active');
-            }
-        });
-    }
-    
-    window.addEventListener('scroll', updateActiveNavLink);
-}
-
-// Вспомогательная функция для случайного цвета
-function getRandomColor() {
-    const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-// Обработчик изменения размера окна
-window.addEventListener('resize', function() {
-    console.log('Размер окна изменен:', window.innerWidth, 'x', window.innerHeight);
-});
-
-// Добавляем класс при скролле для анимаций
-window.addEventListener('scroll', function() {
-    const sections = document.querySelectorAll('.section');
-    const windowHeight = window.innerHeight;
-    
-    sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        if (sectionTop < windowHeight - 100) {
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        }
-    });
-});
